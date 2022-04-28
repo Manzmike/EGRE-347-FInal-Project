@@ -35,7 +35,35 @@ using namespace std;
 
 
 int main(void){
+  string Description,Part_number,Part_name;
+  string Fam;
+  string Pack;
+  string VCC1,VCC2,VCC3,VCC4,VIH,VIL;
+
+  	fstream infile;
+    infile.open ("infile.part");
+    ofstream outfile("outfile.part");
+
   
+  string V_Description,V_Number,V_Name,V_Fam,V_Pack,V_VVC1,V_VCC2,V_VCC3,V_VCC4,V_VIH,V_VIL;
+  
+
+
+  TTL_board V;
+  
+
+  
+  if(!infile.is_open()) {
+    cout << "\nERROR Could not open input file "<<"!\n";
+    cout << "Usage: prog1 <input file name>\n";
+    return(-1);
+  }
+
+
+       
+
+
+	
 //print statements for cases 0-5
 while(1){
 	int op;

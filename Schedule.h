@@ -18,13 +18,15 @@
 
 
 
-enum Family {TTL ,BiCMOS ,CMOS};
-enum Package {SSOP, SOIC, DIP, CFP, LCCC, SO};
-
 
 class TTL_board
 {
-  
+    public:
+
+    TTL_board(void);
+
+    ~TTL_board(void);
+
     void print(int,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>);
     //prints vals
     void load(string,string,string,string,string,string,string,string,string,string,string);

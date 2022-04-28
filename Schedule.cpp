@@ -14,27 +14,37 @@ using namespace std;
 #endif
 
 
+ //default constructure
+    TTL_board::TTL_board(void){
+        
+
+    }
+
+    TTL_board::~TTL_board(void){
+        //cout << "Deleting Part # " << Part_number << endl;
+    }
+
+
 
 //finished
-int menu()
+//finished
+int TTL_board::menu()
 {
-	int choice;
+    int choice;
 
-	cout<<"\nEnter option:\n";
-	cout<<"\t(0) Print the part list\n";
-	cout<<"\t(1) Search for logic number\n";
-	cout<<"\t(2) Search for logic type\n";
-	cout<<"\t(3) Add part to the list\n";
-	cout<<"\t(4) Save the list\n";
-	cout<<"\t(5) Exit the program\n";
-	cout<<"\t\tChoice ?";
+    cout<<"\nEnter option:\n";
+    cout<<"\t(0) Print the part list\n";
+    cout<<"\t(1) Search for logic number\n";
+    cout<<"\t(2) Search for logic type\n";
+    cout<<"\t(3) Add part to the list\n";
+    cout<<"\t(4) Save the list\n";
+    cout<<"\t(5) Exit the program\n";
+    cout<<"\t\tChoice ?";
 
-	cin>>choice;
-	return(choice);
-	
-}	// end menu
-
-
+    cin>>choice;
+    return(choice);
+    
+}   // end menu
 
 
 
@@ -42,58 +52,50 @@ int menu()
 
 
 
-void option1(){
 
-	int part_num;
-	cout<<"You selected option 1"<<endl;
-
-
-	cout<<endl;
-	cout<<"Enter 2 or 3 digit part numbers to find"<<endl<<"\t"<<"(e.g., ""02"", ""32"", ""244""): ";
-
-	cin>>part_num;
-
-
-
+void TTL_board::option0(void){
+cout<<"OP 0";
 }
 
 
 
-void option2(){
-	string part_type;
-	cout<<"You selected option 2"<<endl;
-
-	cout<<"Enter logic type to find: ";
-
-	cin>>part_type;
-
-
-//find logic type using find_if()
-}
-
-
-void option3(){
-	cout<<"You selected option 3"<<endl;
-//adding part to the list using dynamic vector
+void TTL_board::option1(void){
+cout<<"OP 1";
 
 }
 
 
 
 
-void option4(){
-	cout<<"You selected option 4"<<endl;
+void TTL_board::option2(void){
+cout<<"OP 2";
+}
 
-	//write out o a .part file same as pulling into file
+//For option3 the function goes through and scans in new values and adds to the list
+//it ask through each time for the part numbers and from this point it sends to the load function which will add it
+
+void TTL_board::option3(void){
+   
+string Description,Part_number,Part_name,Fam,Pack,VCC1,VCC2,VCC3,VCC4,VIH,VIL;
+string BUFFER;
+cout<<"OP 3";
 
 }
 
 
-//finished
-void option5(){
-	//cout<<"You selected option 5"<<endl;
-	exit(1);
+//This function writes out to an output file
+//it loops through for size of the vector and outputs for each value
 
+void TTL_board::option4(ofstream& ofile){
+    
+cout<<"OP 4";
+    
+}
+
+//this essentially exits the program
+void TTL_board::option5(void){
+cout<<"OP 5";
+    exit(1);
 }
 
 
