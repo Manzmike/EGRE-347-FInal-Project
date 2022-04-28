@@ -10,7 +10,7 @@ using namespace std;
 
 #ifndef SSI_FUNCTIONS
 #define SSI_FUNCTIONS
-#include "SSI.h"
+#include "Schedule.h"
 #endif
 
 
