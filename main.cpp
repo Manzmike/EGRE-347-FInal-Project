@@ -41,8 +41,8 @@ int main(void){
   string VCC1,VCC2,VCC3,VCC4,VIH,VIL;
 
   	fstream infile;
-    infile.open ("infile.part");
-    ofstream outfile("outfile.part");
+    infile.open ("finalp.txt");
+    ofstream outfile("finalp.txt");
 
   
   string V_Description,V_Number,V_Name,V_Fam,V_Pack,V_VVC1,V_VCC2,V_VCC3,V_VCC4,V_VIH,V_VIL;
