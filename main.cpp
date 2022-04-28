@@ -63,7 +63,7 @@ int main(void){
 
 
 
-  TTL_board V;
+  Calander V;
 
 
 
@@ -108,9 +108,14 @@ while(1){
 			break;
 
 		case 5:
-			outfile.close();
 			V.option5();
 			break;
+
+
+    case 6:
+      outfile.close();
+      V.option6();
+        break;
 
 		default:
 

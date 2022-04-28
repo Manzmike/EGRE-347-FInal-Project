@@ -19,20 +19,19 @@
 
 
 
-class TTL_board
+class Calander
 {
     private:
-    int time_yn[7][24];
     string event[7][24];
     string input_day,input_time;
     // the entire year
 
     public:
 
-    TTL_board(void);
-    TTL_board(ifstream&);
+    Calander(void);
+    Calander(ifstream&);
 
-    ~TTL_board(void);
+    ~Calander(void);
 
 
     void print(int,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>);
@@ -48,6 +47,7 @@ class TTL_board
     void option3();
     void option4(ofstream&);
     void option5();
+    void option6();
     void SearchNumber(string, int &, vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&);
     void SearchName(string, int &, vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&);
 
