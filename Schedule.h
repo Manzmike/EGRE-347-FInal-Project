@@ -21,17 +21,25 @@
 
 class TTL_board
 {
+    private:
+    int time_yn[7][24];
+    string event[7][24];
+    string input_day,input_time;
+    // the entire year
+
     public:
 
     TTL_board(void);
+    TTL_board(ifstream&);
 
     ~TTL_board(void);
+
 
     void print(int,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>);
     //prints vals
     void load(string,string,string,string,string,string,string,string,string,string,string);
     //prints vals
-  
+
 
     int menu();
     void option0();
@@ -45,6 +53,5 @@ class TTL_board
 
 
 
-    
-};
 
+};

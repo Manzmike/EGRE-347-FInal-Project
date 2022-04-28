@@ -22,6 +22,8 @@ using namespace std;
 #include <fstream>
 #include <iomanip>
 #include <vector>
+//#include <wiringPi.h>
+//#include <csignal>
 
 
 
@@ -29,9 +31,21 @@ using namespace std;
 
 
 
+/*void blink_led_on(int led) {
+    digitalWrite(led, HIGH);
+}
 
+void blink_led_off(int led) {
+    digitalWrite(led, LOW);
+}
+*/
 
-
+/*
+wiringPiSetupGpio();
+pinMode(red, OUTPUT);
+pinMode(yellow, OUTPUT);
+pinMode(green, OUTPUT);
+*/
 
 
 int main(void){
@@ -44,31 +58,32 @@ int main(void){
     infile.open ("finalp.txt");
     ofstream outfile("finalp.txt");
 
-  
+
   string V_Description,V_Number,V_Name,V_Fam,V_Pack,V_VVC1,V_VCC2,V_VCC3,V_VCC4,V_VIH,V_VIL;
-  
+
 
 
   TTL_board V;
-  
 
-  
-  if(!infile.is_open()) {
+
+
+ if(!infile.is_open()) {
     cout << "\nERROR Could not open input file "<<"!\n";
     cout << "Usage: prog1 <input file name>\n";
     return(-1);
-  }
+ }
 
 
-       
 
 
-	
+
+
+
 //print statements for cases 0-5
 while(1){
 	int op;
 	op = V.menu();
-	
+
 	switch (op) {
 		case 0:
 			V.option0();

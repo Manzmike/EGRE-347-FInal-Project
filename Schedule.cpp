@@ -16,7 +16,11 @@ using namespace std;
 
  //default constructure
     TTL_board::TTL_board(void){
-        
+
+
+    }
+
+    TTL_board::TTL_board(ifstream& is){
 
     }
 
@@ -33,17 +37,17 @@ int TTL_board::menu()
     int choice;
 
     cout<<"\nEnter option:\n";
-    cout<<"\t(0) Print the part list\n";
-    cout<<"\t(1) Search for logic number\n";
-    cout<<"\t(2) Search for logic type\n";
-    cout<<"\t(3) Add part to the list\n";
-    cout<<"\t(4) Save the list\n";
+    cout<<"\t(0) Print Your Current Calander\n";
+    cout<<"\t(1) Search the for a Certian Event\n";
+    cout<<"\t(2) Adding to Calander\n";
+    cout<<"\t(3) Remove from Calander\n";
+    cout<<"\t(4) Exporting Calander\n";
     cout<<"\t(5) Exit the program\n";
     cout<<"\t\tChoice ?";
 
     cin>>choice;
     return(choice);
-    
+
 }   // end menu
 
 
@@ -55,6 +59,9 @@ int TTL_board::menu()
 
 void TTL_board::option0(void){
 cout<<"OP 0";
+
+
+
 }
 
 
@@ -75,7 +82,7 @@ cout<<"OP 2";
 //it ask through each time for the part numbers and from this point it sends to the load function which will add it
 
 void TTL_board::option3(void){
-   
+
 string Description,Part_number,Part_name,Fam,Pack,VCC1,VCC2,VCC3,VCC4,VIH,VIL;
 string BUFFER;
 cout<<"OP 3";
@@ -87,23 +94,27 @@ cout<<"OP 3";
 //it loops through for size of the vector and outputs for each value
 
 void TTL_board::option4(ofstream& ofile){
-    
-cout<<"OP 4";
-    
+
+  //Goes through the event array and prints all events
+  //and dates to the output file to save the data
+  for(int x=1; x<8; x++){
+    for(int y=1; y<25; y++){
+      ofile << x << ", " << y << ", " << this->event[x][y] << "\n";
+    }
+  }
+
 }
 
 //this essentially exits the program
 void TTL_board::option5(void){
-cout<<"OP 5";
+char op5;
+cout<<"Exiting program."<<"\n" <<"Enter 'Y' to continue none of your data will be save:";
+cin>>op5;
+  if(op5 == 'Y'){
     exit(1);
+  }
+  else{
+    menu();
+  }
+
 }
-
-
-
-
-
-
-
-
-
-
