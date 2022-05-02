@@ -22,8 +22,9 @@
 class Calander
 {
     private:
-    string event[7][24];
-    string input_day,input_time;
+    string event[12][31][24];
+    string Copy_event[12][31][24];
+    string input_month,input_day,input_time;
     // the entire year
 
     public:
@@ -48,9 +49,9 @@ class Calander
     void option4(ofstream&);
     void option5();
     void option6();
-    void SearchNumber(string, int &, vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&);
-    void SearchName(string, int &, vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&,vector<string>&);
-
+    void MonthPrint(int);
+    int MonthConvert(string);
+    int TimeConvert(string,string);
 
 
 

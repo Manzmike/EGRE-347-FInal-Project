@@ -24,7 +24,7 @@ using namespace std;
 #include <vector>
 //#include <wiringPi.h>
 //#include <csignal>
-
+#include <curses.h>
 
 
 #include "Schedule.h"
@@ -57,6 +57,7 @@ int main(void){
   	fstream infile;
     infile.open ("finalp.txt");
     ofstream outfile("finalp.txt");
+    ofstream outfile2("Calander_out.csv");
 
 
   string V_Description,V_Number,V_Name,V_Fam,V_Pack,V_VVC1,V_VCC2,V_VCC3,V_VCC4,V_VIH,V_VIL;
@@ -104,7 +105,6 @@ while(1){
 		case 4:
 			V.option4(outfile);
 			outfile.close();
-
 			break;
 
 		case 5:
