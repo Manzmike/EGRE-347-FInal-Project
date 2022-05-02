@@ -51,8 +51,6 @@ class Calander
     void option6();
     void MonthPrint(int);
     int MonthConvert(string);
-    int TimeConvert(string,string);
-
 
 
 };

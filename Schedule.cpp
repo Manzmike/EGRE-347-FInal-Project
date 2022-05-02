@@ -12,7 +12,6 @@ using namespace std;
 #include <curses.h>
 
 
-
 #ifndef SSI_FUNCTIONS
 #define SSI_FUNCTIONS
 #include "Schedule.h"
@@ -56,13 +55,13 @@ int Calander::menu()
 {
     int choice;
     cout<<"\nEnter option:\n";
-    cout<<"\t(0) Print Your current Calander DONE\n";
+    cout<<"\t(0) Print Your current Calander\n";
     cout<<"\t(1) Search the for a certain Event\n";
     cout<<"\t(2) Adding to Calander\n";
     cout<<"\t(3) Remove from Calander\n";
-    cout<<"\t(4) Export Calander DONE\n";
+    cout<<"\t(4) Export Calander\n";
     cout<<"\t(5) Print Calander in Calander Format \n";
-    cout<<"\t(6) Exit the program DONE\n";
+    cout<<"\t(6) Exit the program\n";
     cout<<"\t\tChoice ?";
     cin>>choice;
     return(choice);
@@ -76,7 +75,6 @@ int Calander::menu()
 
 
 void Calander::option0(void){
-  cout<<"OP 0";
 
   for(int x=1; x<13; x++){
     for(int y=1; y<8; y++){
@@ -98,7 +96,7 @@ void Calander::option0(void){
 
 
 void Calander::option1(void){
-  string Month, Time, Am_Pm, event;
+  string Month, Am_Pm, event;
   int input_month=-1, input_day=-1, input_time=-1, n=1, Choice;
 
   cout<<"Here you can search through the scheduler by date and time or event. Please enter 1 to search by date and time or 2 to search by event. ";
@@ -108,17 +106,25 @@ void Calander::option1(void){
     cin>>Month;
     cout<<"Please enter a numerical Day value Ex.(27). (enter \"-1\" to leave blank): ";
     cin>>input_day;
-    cout<<"Please enter a time followed by either AM or PM Ex.(3:00 PM). (enter \"-1\" to leave blank): ";
-    cin>>Time>>Am_Pm;
-  }else if(Choice == 2){
-    cout<<"Please enter the name of an event: ";
-    cin>>event;
-  }else{
-    cout<<"Invalid input, please enter 1 to search by date and time or 2 to search by event."<<endl;
-    cout<<"Returning to main menu!";
+    cout<<"Please enter a numerical Hour of Time from 1 - 12. Ex.(6 PM is 6) & (6 AM is 6): ";
+    cin>>input_time;
+    cout<<"Is your event AM or PM Ex in capalized letters.(PM)" << endl;
+    cin>>Am_Pm;
+  }
+
+  if(Am_Pm != "PM" && Am_Pm != "AM"){
+    cout<<"Incorrect Input for Time coordinate"<<endl;
+    cout<<"Returning to main menu";
     menu();
   }
 
+  if(input_time != -1 && (input_time > 31 || input_time < 1)){
+
+  }
+
+  if(Am_Pm == "PM"){
+
+  }
 
   if((input_day <= 1 || input_day > 31) && (input_day != -1)){
     cout<<"Invalid input for day, should be between 1 and 31"<<endl;
@@ -128,9 +134,6 @@ void Calander::option1(void){
 
   if(Month != "-1" && Month != "")
     input_month = MonthConvert(Month);
-
-  if(Time != "-1" && Am_Pm != "-1" && Time != "" && Am_Pm != "")
-    input_time = TimeConvert(Time, Am_Pm);
 
  if(input_month == 2){
     if(input_day > 28){
@@ -240,59 +243,128 @@ void Calander::option1(void){
 
 void Calander::option2(void){
   int Day, Hour, Min;
+  int i=0;
   string Response, Month, input_event,input_length;
   string event;
   int input_month;
+  int length_input;
+
+  cout<<"Please enter the first 3 capalized letters of the Month Ex.(MAR)" << endl;
+  cin>>Month;
+  input_month = MonthConvert(Month);
+
+  while(input_month > 12 || input_month < 1){
+    cout<<"Invalid input, "<<Month<<" is not a Month."<<endl;
+    cout<<"Please input a valid Month:";
+    cin>>Month;
+    input_month = MonthConvert(Month);
+  }
+
+  cout<<"Please enter the first numerical day Ex.(28)" << endl;
+  cin>>Day;
+
+  while(input_month == 2 && (Day > 28 || Day < 1)){
+     cout<<"Invalid input, there are only 28 days in FEB.";
+     cin>>Day;
+   }
+   while((input_month == 4 || input_month == 6 || input_month == 9 || input_month == 11) && (Day > 30 || Day < 1)){
+     cout<<"Invalid input, there are only 30 days in "<<Month<<".";
+     cin>>Day;
+   }
+   while((input_month == 1 || input_month == 3 || input_month == 5 || input_month == 7 || input_month == 8 || input_month == 10 || input_month == 12) && (Day > 31 || Day < 1)){
+      cout<<"Invalid input, there are only 31 days in "<<Month<<"."<<endl;
+      cin>>Day;
+   }
+
+    cout<<"Please enter a numerical Hour of Time from 1 - 12 to mark when the event begins. Ex. (6 PM is 6) & (6 AM is 6):";
+    cin>>Hour;
+
+    while(Hour > 12 || Hour < 1){
+      cout<<"Invalid input for Hour. Please enter a numerical Hour of Time from 1 - 12 to mark when the event begins. Ex. (6 PM is 6) & (6 AM is 6):"<<endl;
+      cin>>Hour;
+    }
 
 
+
+    cout<<"Is your event AM or PM in capalized letters. Ex.(PM)" << endl;
+    cin>>Response;
+    cout<<Response<<endl;
+
+    while(Response != "AM" && Response != "PM"){
+      cout<<"Invalid input, please enter either AM or PM in capalized letters. Ex.(PM): ";
+      cin>>Response;
+    }
+
+    if(Response == "PM"){
+      Hour += 12;
+    }
+
+    cout<<"Input the event: " << endl;
+    cin>>input_event;
+
+    cout<<"Input your integer event length or 24(End of the day) if it goes till the end of the day" << endl;
+    cin>>input_length;
+
+    if(input_length + Hour > 24){
+      for(int z=Hour; z<Hour+input_length; z++){
+
+      }
+    }
+    else{
+      for(int z=Hour; z<Hour+input_length; z++){
+        if(this->event[input_month][][z])
+      }
+    }
+}
+
+//For option3 the function goes through and scans in new values and adds to the list
+//it ask through each time for the part numbers and from this point it sends to the load function which will add it
+
+void Calander::option3(void){
+  int Day, Hour, Min;
+  string Response, Month, input_event,input_length;
+  int input_month;
 
   cout<<"Please enter the first 3 capalized letters of the Month Ex.(MAR)" << endl;
   cin>> Month;
   input_month = MonthConvert(Month);
 
-
-
-
-
-  cout<<"Please enter a numerical Day value Ex.(27)" << endl;
-  cin>>Day;
-  if(Day > 31 || Day < 1){
-    cout<<"Incorrect Input for Day"<<endl;
-    cout<<"Returning to main menu"<<endl<<endl;
-    menu();
+  while(input_month > 12 || input_month < 1){
+    cout<<"Invalid input, there are only 28 days in FEB."<<endl;
+    cin>>Month;
+    input_month = MonthConvert(Month);
   }
 
+  cout<<"Please enter the first numerical day Ex.(28)" << endl;
+  cin>>Day;
 
-  if(input_month == 2){
-     if(Day > 28){
-       cout<<"Invalid input, there are only 28 days in FEB."<<endl;
-       cout<<"Returning to main menu!"<<endl<<endl;
-       menu();
-     }
-   }else if(input_month == 4 || input_month == 6 || input_month == 9 || input_month == 11){
-     if(Day > 30){
-       cout<<"Invalid input, there are only 30 days in "<<Month<<"."<<endl;
-       cout<<"Returning to main menu!"<<endl<<endl;
-       menu();
-     }
+  while(input_month == 2 && (Day > 28 || Day < 1)){
+     cout<<"Invalid input, there are only 28 days in FEB.";
+     cin>>Day;
+   }
+   while((input_month == 4 || input_month == 6 || input_month == 9 || input_month == 11) && (Day > 30 || Day < 1)){
+     cout<<"Invalid input, there are only 30 days in"<<input_month<<".";
+     cin>>Day;
+   }
+   while((input_month == 1 || input_month == 3 || input_month == 5 || input_month == 7 || input_month == 8 || input_month == 10 || input_month == 12) && (Day > 31 || Day < 1)){
+      cout<<"Invalid input, there are only 31 days in"<<input_month<< "."<<endl;
+      cin>>Day;
    }
 
+    cout<<"Please enter a numerical Hour of Time from 1 - 12. Ex. (6 PM is 6) & (6 AM is 6):" << endl;
+    cin>> Hour;
 
-
-  cout<<"Please enter a numerical Hour of Time from 1 - 12. Ex. (6 PM is 6) & (6 AM is 6):" << endl;
-  cin>> Hour;
-
-  if(Hour > 12){
-    cout<<"Incorrect Input for Hour"<<endl;
-    cout<<"Returning to main menu"<<endl<<endl;
-    menu();
-  }
+    if(Hour > 12){
+      cout<<"Incorrect Input for Hour"<<endl;
+      cout<<"Returning to main menu"<<endl<<endl;
+      menu();
+    }
 
 
 
-  cout<<"Is your event AM or PM Ex in capalized letters.(PM)" << endl;
-  cin>> Response;
-  cout<<Response<<endl;
+    cout<<"Is your event AM or PM Ex in capalized letters.(PM)" << endl;
+    cin>> Response;
+    cout<<Response<<endl;
 
   if(Response != "PM" && Response != "AM" ){
     cout<<"Incorrect Input for Time coordinate"<<endl;
@@ -300,28 +372,25 @@ void Calander::option2(void){
     menu();
   }
 
-  cout<<"Input the event: " << endl;
-  cin>>input_event;
+  cout<<"Found "<< this->event[input_month][Day][Hour]<<" on "<<input_month<<"/"<<Day<<", "<<Hour<<"."<<endl;
+  cout<<"Are you sure you want to delete this event? (Y/N) ";
+  cin>>Response;
 
-  cout<<"Input your integer event length or EOD(End of Day) if it goes till the end of the day" << endl;
-  cin>> input_length;
-
-  this->event[input_month][Day][Hour]=input_event;
-
-
-
-
-}
-
-//For option3 the function goes through and scans in new values and adds to the list
-//it ask through each time for the part numbers and from this point it sends to the load function which will add it
-
-void Calander::option3(void){
-  cout<<"OP 3";
-
+  if(Response == "Y"){
+    cout<<"Event "<<this->event[input_month][Day][Hour]<<" deleted from calander"<<endl;
+    cout<<"Returning to main menu.";
+    menu();
+  }else if(Response == "N"){
+    cout<<"No events deleted from calander"<<endl;
+    cout<<"Returning to main menu.";
+    menu();
+  }else{
+    cout<<"ERROR: Invalid response, no events deleted from calander."<<endl;
+    cout<<"Returning to main menu.";
+    menu();
+  }
 
 }
-
 
 //This function writes out to an output file
 //it loops through for size of the vector and outputs for each value
@@ -516,81 +585,10 @@ int Calander::MonthConvert(string Month){
     input_month = 12;
   }
   else{
-    cout<<"Invalid input, please enter the first 3 capalized letters of the month Ex.(MAR)."<<endl;
-    cout<<"Returning to main menu!";
-    menu();
+    input_month = 13;
+    return input_month;
   }
 
   return input_month;
 
-}
-
-
-
-int Calander::TimeConvert(string time, string am_pm){
-
-    int input_time;
-
-    if(time == "1:00"){
-      input_time = 1;
-                      }
-    else if(time == "2:00"){
-      input_time = 2;
-                            }
-
-    else if(time == "3:00"){
-      input_time = 3;
-                            }
-
-    else if(time == "4:00"){
-      input_time = 4;
-                            }
-
-    else if(time == "5:00"){
-      input_time = 5;
-                            }
-
-    else if(time == "6:00"){
-      input_time = 6;
-                            }
-
-    else if(time == "7:00"){
-      input_time = 7;
-                            }
-
-    else if(time == "8:00"){
-      input_time = 8;
-                            }
-
-    else if(time == "9:00"){
-      input_time = 9;
-                            }
-
-    else if(time == "10:00"){
-      input_time = 10;
-                            }
-
-    else if(time == "11:00"){
-      input_time = 11;
-                            }
-
-    else if(time == "12:00"){
-      input_time = 12;
-                            }
-    else{
-      cout << "Invalid time input, please enter a time followed by either AM or PM Ex.(3:00 PM)."<<endl;
-      cout << "Returning to main menu!";
-      menu();
-                            }
-    // PM adding
-    if(am_pm == "PM")       {
-      input_time = input_time+12;
-                            }
-    else if(am_pm != "AM")  {
-      cout << "Invalid time input, please enter a time followed by either AM or PM Ex.(3:00 PM)."<<endl;
-      cout << "Returning to main menu!";
-      menu();
-                            }
-
-    return input_time;
 }
