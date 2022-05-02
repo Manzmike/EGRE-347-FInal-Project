@@ -55,9 +55,8 @@ int main(void){
   string VCC1,VCC2,VCC3,VCC4,VIH,VIL;
 
   	fstream infile;
-    infile.open ("finalp.txt");
-    ofstream outfile("finalp.txt");
-    ofstream outfile2("Calander_out.csv");
+    infile.open ("Inital_Cal.txt");
+    ofstream outfile("Final_Cal.txt");
 
 
   string V_Description,V_Number,V_Name,V_Fam,V_Pack,V_VVC1,V_VCC2,V_VCC3,V_VCC4,V_VIH,V_VIL;
