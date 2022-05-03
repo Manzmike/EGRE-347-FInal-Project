@@ -30,17 +30,12 @@ class Calander
     public:
 
     Calander(void);
-    Calander(ifstream&);
 
     ~Calander(void);
 
 
-    void print(int,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>,vector<string>);
-    //prints vals
-    void load(string,string,string,string,string,string,string,string,string,string,string);
-    //prints vals
 
-
+    void load(string,string,string,string);
     int menu();
     void option0();
     void option1();
@@ -51,6 +46,7 @@ class Calander
     void option6();
     void MonthPrint(int);
     int MonthConvert(string);
+    string ConvertMonth(int);
 
 
 };

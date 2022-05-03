@@ -49,24 +49,18 @@ pinMode(green, OUTPUT);
 
 
 int main(void){
-  string Description,Part_number,Part_name;
-  string Fam;
-  string Pack;
-  string VCC1,VCC2,VCC3,VCC4,VIH,VIL;
+  string Month, Day, Hour, Event;
 
   	fstream infile;
-    infile.open ("Inital_Cal.txt");
-    ofstream outfile("Final_Cal.txt");
-
-
-  string V_Description,V_Number,V_Name,V_Fam,V_Pack,V_VVC1,V_VCC2,V_VCC3,V_VCC4,V_VIH,V_VIL;
-
+    infile.open("Inital_Cal.txt");
+    ofstream outfile("Inital_Cal20.txt");
 
 
   Calander V;
 
 
-
+//infile opening
+//checks if the infile is opened each time
  if(!infile.is_open()) {
     cout << "\nERROR Could not open input file "<<"!\n";
     cout << "Usage: prog1 <input file name>\n";
@@ -77,14 +71,35 @@ int main(void){
 
 
 
+while(!infile.eof()) {
+  Month="";
+  Day="";
+  Hour="";
+	getline(infile, Month, ',');
+  //cout<<Month<<endl;
+  getline(infile, Day, ',');
+  //cout<<Day<<endl;
+  getline(infile, Hour, ',');
+  //cout<<Hour<<endl;
+  getline(infile, Event, '\n');
+  //cout<<Event<<endl;
+  infile.ignore();
+
+  //cout<<"Test"<<endl;
+	V.load(Month, Day, Hour, Event);
+}
 
 
-//print statements for cases 0-5
+
+//print statements for cases 0-6
+// the while loop reitterates through the code after each case;
+
 while(1){
 	int op;
 	op = V.menu();
 
 	switch (op) {
+
 		case 0:
 			V.option0();
 			break;

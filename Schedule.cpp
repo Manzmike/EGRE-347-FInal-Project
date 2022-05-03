@@ -23,33 +23,27 @@ Calander::Calander(void){
     }
 
 
-// default Calander input fucntion file which will read in values for the Calander
-// From this it will d
-Calander::Calander(ifstream& is){
-string Month, Day, Time, Event;
-//TEST
-      for(int x=1; x<13; x++){
-        for(int y=1; y<8; y++){
-          for(int z=1; z<25; z++){
-            getline(is, Month, ',');
-            getline(is, Day, ',');
-            getline(is, Time, ',');
-            getline(is, Event, '\n');
-
-            this->event[stoi(Month)][stoi(Day)][stoi(Time)] = Event;
-            }
-          }
-        }
-
-      }
-
-
-
 Calander::~Calander(void){
         cout<< "Thanks for using Calander Creator!";
 }
 
 
+
+// default Calander input fucntion file which will read in values for the Calander
+// From this it will d
+void Calander::load(string Month, string Day, string Hour, string Event){
+
+  int x=0, y=0, z=0;
+
+  x=stoi(Month);
+  y=stoi(Day);
+  z=stoi(Hour);
+
+  this->event[x][y][z] = Event;
+  Month ="";
+  Day ="";
+  Hour ="";
+}
 
 // This is the options menu from where the user can select to print the current Calander
 //Option 0 Print the current events to the screen
@@ -81,15 +75,15 @@ int Calander::menu()
 // Option 2 outputs the data in a readable for where the user can take the data printed from the
 //screen and understand what of all the events they have going once
 void Calander::option0(void){
-
+  cout<<"TEST";
   for(int x=1; x<13; x++){
     for(int y=1; y<8; y++){
       for(int z=1; z<25; z++){
         if(event[x][y][z] != ""){
           if(z>12){
-            cout << x << "/" << y << ", " << z-12 << ":00 PM, " << this->event[x][y][z] << "\n";
+            cout << ConvertMonth(x) << " " << y << ", " << z-12 << ":00 PM, " << this->event[x][y][z] << "\n";
           }else{
-            cout << x << "/" << y << ", " << z << ":00 AM, " << this->event[x][y][z] << "\n";
+            cout << ConvertMonth(x) << " " << y << ", " << z << ":00 AM, " << this->event[x][y][z] << "\n";
           }
         }
       }
@@ -102,146 +96,256 @@ void Calander::option0(void){
 
 
 void Calander::option1(void){
-  string Month, Am_Pm, event;
-  int input_month=-1, input_day=-1, input_time=-1, n=1, Choice;
+  string Month, Am_Pm, event, Day, Choice, Hour;
+  int input_month=-1, input_day=-1, input_time=-1, num=0;
 
   cout<<"Here you can search through the scheduler by date and time or event. Please enter 1 to search by date and time or 2 to search by event. ";
   cin>>Choice;
-  if(Choice == 1){
+
+  while(Choice != "1" && Choice != "2"){
+    cout<<"Invalid input, please enter 1 to search by date and time or 2 to search by event. ";
+    cin>>Choice;
+  }
+
+  if(Choice == "1"){
     cout<<"Please enter the first 3 capalized letters of the month Ex.(MAR). (enter \"-1\" to leave blank): ";
     cin>>Month;
-    cout<<"Please enter a numerical Day value Ex.(27). (enter \"-1\" to leave blank): ";
-    cin>>input_day;
-    cout<<"Please enter a numerical Hour of Time from 1 - 12. Ex.(6 PM is 6) & (6 AM is 6): ";
-    cin>>input_time;
-    cout<<"Is your event AM or PM Ex in capalized letters.(PM)" << endl;
-    cin>>Am_Pm;
-  }
-
-  if(Am_Pm != "PM" && Am_Pm != "AM"){
-    cout<<"Incorrect Input for Time coordinate"<<endl;
-    cout<<"Returning to main menu";
-    //menu();
-  }
-
-  if(input_time != -1 && (input_time > 31 || input_time < 1)){
-
-  }
-
-  if(Am_Pm == "PM"){
-
-  }
-
-  if((input_day <= 1 || input_day > 31) && (input_day != -1)){
-    cout<<"Invalid input for day, should be between 1 and 31"<<endl;
-    cout<<"Returning to main menu!";
-    //menu();
-  }
-
-  if(Month != "-1" && Month != "")
     input_month = MonthConvert(Month);
 
- if(input_month == 2){
-    if(input_day > 28){
-      cout<<"Invalid input, there are only 28 days in FEB."<<endl;
-      cout<<"Returning to main menu!";
-      //menu();
+    while(Month != "-1" && Month != "JAN" && Month != "FEB" && Month != "MAR" && Month != "APR" && Month != "MAY" && Month != "JUN" && Month != "JUL" && Month != "AUG" && Month != "SEP" && Month != "OCT" && Month != "NOV" && Month != "DEC"){
+      cout<<"Invalid input, please enter the first 3 capalized letters of the month Ex.(MAR). (enter \"-1\" to leave blank): ";;
+      cin>>Month;
+      input_month = MonthConvert(Month);
     }
-  }else if(input_month == 4 || input_month == 6 || input_month == 9 || input_month == 11){
-    if(input_day > 30){
-      cout<<"Invalid input, there are only 30 days in "<<Month<<"."<<endl;
-      cout<<"Returning to main menu!<<"endl;
-      //menu();
+
+    cout<<"Please enter a numerical Day value Ex.(27). (enter \"-1\" to leave blank): ";
+    cin>>Day;
+    input_day = stoi(Day);
+
+    if(input_month == 2){
+      while((input_day > 28 || input_day < 1) && input_day != -1){
+        cout<<"Invalid input, there are only 28 days in FEB."<<endl;
+        cout<<"Please enter a numerical Day value Ex.(27). (enter \"-1\" to leave blank): ";
+        cin>>Day;
+        input_day = stoi(Day);
+      }
+    }else if(input_month == 4 || input_month == 6 || input_month == 9 ||input_month == 11){
+      while((input_day > 30 || input_day < 1) && input_day != -1){
+        cout<<"Invalid input, there are only 30 days in "<<Month<<"."<<endl;
+        cout<<"Please enter a numerical Day value Ex.(27). (enter \"-1\" to leave blank): ";
+        cin>>Day;
+        input_day = stoi(Day);
+      }
+    }else{
+      while((input_day > 31 || input_day < 1) && input_day != -1){
+        cout<<"Invalid input, there are only 31 days in FEB."<<endl;
+        cout<<"Please enter a numerical Day value Ex.(27). (enter \"-1\" to leave blank): ";
+        cin>>Day;
+        input_day = stoi(Day);
+      }
     }
-  }
 
+    cout<<"Please enter a numerical Hour of Time from 1 - 12. Ex.(6 PM is 6) & (6 AM is 6): ";
+    cin>>Hour;
+    input_time = stoi(Hour);
 
-  cout<<"Results:"<<endl<<endl;
+    while(input_time > 12 && input_time < 1){
+      cout<<"Invalid input, enter a numerical Hour of Time from 1 - 12. Ex.(6 PM is 6) & (6 AM is 6): ";
+      cin>>Hour;
+      input_time = stoi(Hour);
+    }
 
-  if(Choice == 1){
-    if(input_month != -1 && input_day != -1 && input_time != -1){
-      cout<<n<<".) "<<input_month<< "\\"<<input_day<< ", "<<input_time<<", "<<this->event[input_month][input_day][input_time]<<"\n";
-      n++;
+    cout<<"Is your event AM or PM? Ex.(PM)" << endl;
+    cin>>Am_Pm;
+
+    while(Am_Pm != "AM" && Am_Pm != "PM"){
+      cout<<"Invalid input, please enter either AM or PM capitalized. ";
+      cin>>Am_Pm;
+    }
+
+    if(Am_Pm == "PM"){
+      Hour += 12;
+    }
+
+    if(input_month != -1 && input_day !=-1 && input_time != -1){
+      if(this->event[input_month][input_day][input_time] != ""){
+        if(input_time>12){
+          cout << this->event[input_month][input_day][input_time] << " found at " << ConvertMonth(input_month) << " " << input_day << ", " << input_time-12 << ":00 PM, " << "\n";
+        }else{
+          cout << this->event[input_month][input_day][input_time] << " found at " << ConvertMonth(input_month) << " " << input_day << ", " << input_time << ":00 AM, " << "\n";
+        }
+        cout<<"Returning to main menu.";
+      }else{
+        cout << "No events found at ";
+        if(input_time>12){
+          cout << ConvertMonth(input_month) << " " << input_day << ", " << input_time-12 << ":00 PM, " << "\n";
+        }else{
+          cout << ConvertMonth(input_month) << " " << input_day << ", " << input_time << ":00 AM, " << "\n";
+        }
+        cout<<"Returning to main menu.";
+      }
     }else if(input_month != -1 && input_day != -1 && input_time == -1){
-      for(int z=0; z<25; z++){
+      for(int z=1; z<25; z++){
         if(this->event[input_month][input_day][z] != ""){
-          cout<<n<<".) "<<input_month<< "\\"<<input_day<< ", "<<z<<", "<<this->event[input_month][input_day][z]<<"\n";
-          n++;
-        }
-      }
-    }else if(input_month != -1 && input_day == -1 && input_time == -1){
-      for(int y=0; y<31; y++){
-        for(int z=0; z<25; z++){
-          if(this->event[input_month][y][z] != ""){
-            cout<<n<<".) "<<input_month<< "\\"<<y<< ", "<<z<<", "<<this->event[input_month][y][z]<<"\n";
-            n++;
+          if(z>12){
+            num++;
+            cout << num << ".)" << ConvertMonth(input_month) << " " << input_day << ", " << z-12 << ":00 PM, " << this->event[input_month][input_day][z] << "\n";
+          }else{
+            num++;
+            cout << num << ".)" << ConvertMonth(input_month) << " " << input_day << ", " << z << ":00 AM, " << this->event[input_month][input_day][z] << "\n";
           }
         }
       }
-    }else if(input_month == -1 && input_day != -1 && input_time != -1){
-      for(int x=0; x<13; x++){
-        if(this->event[x][input_day][input_time] != ""){
-          cout<<n<<".) "<<x<< "\\"<<input_day<< ", "<<input_time<<", "<<this->event[x][input_day][input_time]<<"\n";
-          n++;
-        }
+      if(num > 0){
+        cout<<"Found the above events."<<endl;
+        cout<<"Returning to main menu.";
+      }else{
+        cout<<"No events found at " << ConvertMonth(input_month) << " " << input_day << ", " << "\n";
+        cout<<"Returning to main menu.";
       }
+
     }else if(input_month == -1 && input_day != -1 && input_time == -1){
-      for(int x=0; x<13; x++){
-        for(int z=0; z<25; z++){
+      for(int x=1; x<13; x++){
+        for(int z=1; z<25; z++){
           if(this->event[x][input_day][z] != ""){
-            cout<<n<<".) "<<x<< "\\"<<input_day<< ", "<<z<<", "<<this->event[x][input_day][z]<<"\n";
-            n++;
+            if(z>12){
+              num++;
+              cout << num << ".)" << ConvertMonth(x) << " " << input_day << ", " << z-12 << ":00 PM, " << this->event[x][input_day][z] << "\n";
+            }else{
+              num++;
+              cout << num << ".)" << ConvertMonth(x) << " " << input_day << ", " << z << ":00 AM, " << this->event[x][input_day][z] << "\n";
+            }
           }
         }
       }
-    }else if(input_month != -1 && input_day == -1 && input_time != -1){
-      for(int y=0; y<32; y++){
-        if(this->event[input_month][y][input_time] != ""){
-          cout<<n<<".) "<<input_month<< "\\"<<y<< ", "<<input_time<<", "<<this->event[input_month][y][input_time]<<"\n";
-          n++;
-        }
+      if(num > 0){
+        cout<<"Found the above events."<<endl;
+        cout<<"Returning to main menu.";
+      }else{
+        cout<<"No events found at " << input_day << "\n";
+        cout<<"Returning to main menu.";
       }
     }else if(input_month != -1 && input_day == -1 && input_time == -1){
-      for(int y=0; y<32; y++){
-        for(int z=0; z<25; z++){
-          if(this->event[input_month][y][z] != ""){
-            cout<<n<<".) "<<input_month<< "\\"<<y<< ", "<<z<<", "<<this->event[input_month][y][z]<<"\n";
-            n++;
+      for(int y=1; y<32; y++){
+        for(int z=1; z<25; z++){
+          if(this->event[input_month][input_day][z] != ""){
+            if(z>12){
+              num++;
+              cout << num << ".)" << ConvertMonth(input_month) << " " << y << ", " << z-12 << ":00 PM, " << this->event[input_month][y][z] << "\n";
+            }else{
+              num++;
+              cout << num << ".)" << ConvertMonth(input_month) << " " << y << ", " << z << ":00 AM, " << this->event[input_month][y][z] << "\n";
+            }
           }
         }
       }
-    }else if(input_month == -1 && input_day == -1 && input_time != -1){
-      for(int x=0; x<13; x++){
-        for(int y=0; y<32; y++){
-          if(this->event[x][y][input_time] != ""){
-            cout<<n<<".) "<<x<< "\\"<<y<< ", "<<input_time<<", "<<this->event[x][y][input_time]<<"\n";
-            n++;
-          }
-        }
+      if(num > 0){
+        cout<<"Found the above events."<<endl;
+        cout<<"Returning to main menu.";
+      }else{
+        cout<<"No events found in " << ConvertMonth(input_month) << "\n";
+        cout<<"Returning to main menu.";
       }
     }else if(input_month == -1 && input_day == -1 && input_time == -1){
-      cout << "Not enough information, returning to main menu.";
-      //menu();
+      cout<<"Not enough information given."<<endl;
+      cout<<"Returning to main menu.";
+    }else if(input_month != -1 && input_day == -1 && input_time != -1){
+      for(int y=1; y<32; y++){
+        if(this->event[input_month][y][input_time] != ""){
+          if(input_time>12){
+            num++;
+            cout << num << ".)" << ConvertMonth(input_month) << " " << y << ", " << input_time-12 << ":00 PM, " << this->event[input_month][y][input_time] << "\n";
+          }else{
+            num++;
+            cout << num << ".)" << ConvertMonth(input_month) << " " << input_day << ", " << input_time << ":00 AM, " << this->event[input_month][y][input_time] << "\n";
+          }
+        }
+      }
+      if(num > 0){
+        cout<<"Found the above events."<<endl;
+        cout<<"Returning to main menu.";
+      }else{
+        if(input_time>12){
+          cout<<"No events found at " << ConvertMonth(input_month) << " " << input_time-12 << ":00 PM" << "\n";
+        }else{
+          cout<<"No events found at " << ConvertMonth(input_month) << " " << input_time << ":00 AM" << "\n";
+        }
+        cout<<"Returning to main menu.";
+      }
+    }else if(input_month == -1 && input_day == -1 && input_time != -1){
+      for(int x=1; x<13; x++){
+        for(int y=1; y<32; y++){
+          if(this->event[x][x][input_time] != ""){
+            if(input_time>12){
+              num++;
+              cout << num << ".)" << ConvertMonth(x) << " " << y << ", " << input_time-12 << ":00 PM, " << this->event[x][y][input_time] << "\n";
+            }else{
+              num++;
+              cout << num << ".)" << ConvertMonth(x) << " " << y << ", " << input_time << ":00 AM, " << this->event[x][y][input_time] << "\n";
+            }
+          }
+        }
+      }
+      if(num > 0){
+        cout<<"Found the above events."<<endl;
+        cout<<"Returning to main menu.";
+      }else{
+        if(input_time>12){
+          cout<<"No events found at " << input_time-12 << ":00 PM" << "\n";
+        }else{
+          cout<<"No events found at " << input_time << ":00 AM" << "\n";
+        }
+        cout<<"Returning to main menu.";
+      }
+    }else if(input_month == -1 && input_day != -1 && input_time != -1){
+      for(int x=1; x<13; x++){
+        if(this->event[x][input_day][input_time] != ""){
+          if(input_time>12){
+            num++;
+            cout << num << ".)" << ConvertMonth(x) << " " << input_day << ", " << input_time-12 << ":00 PM, " << this->event[x][input_day][input_time] << "\n";
+          }else{
+            num++;
+            cout << num << ".)" << ConvertMonth(x) << " " << input_day << ", " << input_time << ":00 AM, " << this->event[x][input_day][input_time] << "\n";
+          }
+        }
+      }
+      if(num > 0){
+        cout<<"Found the above events."<<endl;
+        cout<<"Returning to main menu.";
+      }else{
+        if(input_time>12){
+          cout<<"No events found at " << input_day << ", " << input_time-12 << ":00 PM" << "\n";
+        }else{
+          cout<<"No events found at " << input_day << ", " << input_time << ":00 AM" << "\n";
+        }
+        cout<<"Returning to main menu.";
+      }
     }
-  }else if(Choice == 2){
+
+  }else{
     for(int x=1; x<13; x++){
-      for(int y=1; y<8; y++){
+      for(int y=1; y<32; y++){
         for(int z=1; z<25; z++){
           if(this->event[x][y][z] == event){
-            cout<<n<<".) "<<x<< "\\"<<y<< ", "<<z<<", "<<this->event[x][y][z]<<"\n";
-            n++;
+            if(z>12){
+              num++;
+              cout << num << ".)" << ConvertMonth(x) << " " << y << ", " << z-12 << ":00 PM, " << this->event[x][y][z] << "\n";
+            }else{
+              num++;
+              cout << num << ".)" << ConvertMonth(x) << " " << y << ", " << z << ":00 AM, " << this->event[x][y][z] << "\n";
+            }
           }
         }
       }
     }
+    if(num > 0){
+      cout<<"Found the above events."<<endl;
+      cout<<"Returning to main menu.";
+    }else{
+      cout<<"No events found under "<<event<<"."<<endl;
+      cout<<"Returning to main menu.";
+    }
   }
-
-  if(n==1){
-    cout<<"Could not find any events under that date, time, or name."<<endl;
-    cout<<"Returning to main menu.";
-    //menu();
-  }
-
 
 }
 
@@ -252,7 +356,7 @@ void Calander::option1(void){
 // the data as well while loops until the user has put in a correct value for each of the Month , day , time , Hour , and AM or PM .
 
 void Calander::option2(void){
-  int Day, Hour, End, Num=1;
+  int Day, Hour, End, Num=0;
   int i=0;
   string Response, Am_Pm, Month, input_event,input_length,Yn,input_day;
   string event;
@@ -277,12 +381,12 @@ void Calander::option2(void){
   while(input_month == 2 && (Day > 28 || Day < 1)){
      cout<<"Invalid input, there are only 28 days in FEB.";
      cin>>input_day;
-     Day=stoi(input_day);
+    Day=stoi(input_day);
    }
    while((input_month == 4 || input_month == 6 || input_month == 9 || input_month == 11) && (Day > 30 || Day < 1)){
      cout<<"Invalid input, there are only 30 days in "<<Month<<".";
      cin>>input_day;
-     Day=stoi(input_day);
+    Day=stoi(input_day);
    }
    while((input_month == 1 || input_month == 3 || input_month == 5 || input_month == 7 || input_month == 8 || input_month == 10 || input_month == 12) && (Day > 31 || Day < 1)){
       cout<<"Invalid input, there are only 31 days in "<<Month<<"."<<endl;
@@ -302,7 +406,7 @@ void Calander::option2(void){
 
     cout<<"Is your event AM or PM in capalized letters. Ex.(PM)" << endl;
     cin>>Response;
-    //cout<<Response<<endl;
+    cout<<Response<<endl;
 
     while(Response != "AM" && Response != "PM"){
       cout<<"Invalid input, please enter either AM or PM in capalized letters. Ex.(PM): ";
@@ -330,15 +434,15 @@ void Calander::option2(void){
       cout<<"NOTE: schedule cannot schedule events across multiple days. If you have an event that takes place multiple days you will need to schedule it for each day individually."<<endl;
       for(int z=Hour; z<25; z++){
         if(this->event[input_month][Day][z] != ""){
-          cout<<Num<<".) "<<input_month<<"/"<<Day<<", "<<z<<", "<<this->event[input_month][Day][z];
           Num++;
+          cout<<Num<<".) "<<input_month<<"/"<<Day<<", "<<z<<", "<<this->event[input_month][Day][z];
         }
       }
     }else{
       for(int z=Hour; z<=(Hour+length_input)-1; z++){
         if(this->event[input_month][Day][z] != ""){
-          cout<<Num<<".) "<<input_month<<"/"<<Day<<", "<<z<<", "<<this->event[input_month][Day][z];
           Num++;
+          cout<<Num<<".) "<<input_month<<"/"<<Day<<", "<<z<<", "<<this->event[input_month][Day][z];
         }
       }
     }
@@ -350,7 +454,7 @@ void Calander::option2(void){
       Am_Pm = "PM";
     }
 
-    if(Num > 1){
+    if(Num > 0){
       cout<<"The current event being added overlaps with the above event(s). Would you still like to add the event? (Y/N) (NOTE: scheduling this event will over write all overlapping events) ";
       cin>>Yn;
 
@@ -372,7 +476,7 @@ void Calander::option2(void){
       }
     }else{
       cout<<"Input Time"<<input_time;
-      cout<<"Are you sure you want to schedule "<<input_event<<" for "<<Month<<" "<<Day<<" from "<<input_time<<":00 "<<Response<<" till "<<End<<":00 "<<Am_Pm<<"? (Y/N)"<<endl;
+      cout<<"Are you sure you want to schedule "<<input_event<<" for "<<Month<<" "<<Day<<" from "<<Hour<<":00 "<<Response<<" till "<<End<<":00 "<<Am_Pm<<"? (Y/N)"<<endl;
       cin>>Yn;
 
       while(Yn != "Y" && Yn != "N"){
@@ -383,7 +487,7 @@ void Calander::option2(void){
         for(int z=Hour; z<=(Hour+length_input)-1; z++){
           this->event[input_month][Day][z] = input_event;
         }
-        cout<<"Event "<<input_event<<" scheduled for "<<Month<<" "<<Day<<" from "<<input_time<<":00 "<<Response<<" till "<<End<<":00 "<<Am_Pm<<"."<<endl;
+        cout<<"Event "<<input_event<<" scheduled for "<<Month<<" "<<Day<<" from "<<Hour<<":00 "<<Response<<" till "<<End<<":00 "<<Am_Pm<<"."<<endl;
         cout<<"Returning to main menu.";
         //menu();
       }else{
@@ -399,7 +503,7 @@ void Calander::option2(void){
 
 void Calander::option3(void){
   string Event, Month, Day, Hour, choice;
-  int num=1, remove;
+  int num=0, remove;
 
   cout<<"Enter the name of an event you would like to delete (case sensitive): ";
   cin>>Event;
@@ -419,7 +523,7 @@ void Calander::option3(void){
       }
     }
   }
-  if(num > 1){
+  if(num > 0){
     cout<<"Found the above events. Type any number from the list above to remove the corresponding event, or type 0 to remove all of them. (type -1 to exit to main menu) ";
     cin>>choice;
     remove = stoi(choice);
@@ -458,7 +562,8 @@ void Calander::option3(void){
         cout<<"No events deleted."<<endl;
         cout<<"Returning to main menu.";
       }
-    }else(){
+    }else{
+      num = 1;
       for(int x=1; x<13; x++){
         for(int y=1; y<32; y++){
           for(int z=1; z<25; z++){
@@ -486,7 +591,7 @@ void Calander::option3(void){
 
 //This function writes out to an output file
 //it loops through for size of the vector and outputs for each value
-//from this it'd output to final_Cal.txt
+//from this it'd output to Final_Cal.txt
 void Calander::option4(ofstream& ofile){
 
   //Goes through the event array and prints all events
@@ -494,7 +599,9 @@ void Calander::option4(ofstream& ofile){
   for(int x=1; x<13; x++){
     for(int y=1; y<8; y++){
       for(int z=1; z<25; z++){
-        ofile << x << ", " << y << ", " << z << "," << this->event[x][y][z] << "\n";
+        if(this->event[x][y][z] != ""){
+          ofile << x << "," << y << "," << z << "," << this->event[x][y][z] << "\n\n";
+        }
       }
     }
   }
@@ -692,6 +799,8 @@ int Calander::MonthConvert(string Month){
   return input_month;
 
 }
+
+
 // seperate function
 //ConvertMonth
 //Takes the Month input int and converts it to string values
