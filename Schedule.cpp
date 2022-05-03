@@ -6,10 +6,11 @@ using namespace std;
 
 #include <iostream>
 #include <string>
+#include <wiringPi.h>
+#include <csignal>
 #include <fstream>
 #include <iomanip>
 #include <vector>
-#include <curses.h>
 
 
 #ifndef SSI_FUNCTIONS
@@ -27,6 +28,15 @@ Calander::~Calander(void){
         cout<< "Thanks for using Calander Creator!";
 }
 
+
+ // Blink an LED
+void blink_led_on(int led) {
+    digitalWrite(led, HIGH);
+}
+
+void blink_led_off(int led) {
+    digitalWrite(led, LOW);
+}
 
 
 // default Calander input fucntion file which will read in values for the Calander
@@ -52,6 +62,16 @@ void Calander::load(string Month, string Day, string Hour, string Event){
 // Option 3 Remove from the calander using
 int Calander::menu()
 {
+    wiringPiSetupGpio();
+    pinMode(red, OUTPUT);
+    pinMode(yellow, OUTPUT);
+    pinMode(green, OUTPUT);
+
+
+    blink_led_off(green);
+    blink_led_off(yellow);
+    blink_led_off(red);
+
     int choice;
     cout<<"\nEnter option:\n";
     cout<<"\t(0) Print Your current Calander\n";
@@ -75,15 +95,18 @@ int Calander::menu()
 // Option 2 outputs the data in a readable for where the user can take the data printed from the
 //screen and understand what of all the events they have going once
 void Calander::option0(void){
-  cout<<"TEST";
+
+  blink_led_on(green);
+  delay(1000);
+
   for(int x=1; x<13; x++){
     for(int y=1; y<8; y++){
       for(int z=1; z<25; z++){
-        if(event[x][y][z] != ""){
+        if(this->event[x][y][z] != ""){
           if(z>12){
-            cout << ConvertMonth(x) << " " << y << ", " << z-12 << ":00 PM, " << this->event[x][y][z] << "\n";
+            cout << x << "/" << y << ", " << z-12 << ":00 PM, " << this->event[x][y][z] << "\n";
           }else{
-            cout << ConvertMonth(x) << " " << y << ", " << z << ":00 AM, " << this->event[x][y][z] << "\n";
+            cout << x << "/" << y << ", " << z << ":00 AM, " << this->event[x][y][z] << "\n";
           }
         }
       }

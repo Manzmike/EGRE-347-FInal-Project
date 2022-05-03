@@ -48,5 +48,9 @@ class Calander
     int MonthConvert(string);
     string ConvertMonth(int);
 
+    const int red = 5;
+    const int yellow = 6;
+    const int green = 13;
+
 
 };

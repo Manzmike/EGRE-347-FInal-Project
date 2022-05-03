@@ -22,9 +22,8 @@ using namespace std;
 #include <fstream>
 #include <iomanip>
 #include <vector>
-//#include <wiringPi.h>
-//#include <csignal>
-#include <curses.h>
+#include <wiringPi.h>
+#include <csignal>
 
 
 #include "Schedule.h"
