@@ -34,7 +34,6 @@ class Calander
     ~Calander(void);
 
 
-
     void load(string,string,string,string);
     int menu();
     void option0();

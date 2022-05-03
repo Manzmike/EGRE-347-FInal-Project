@@ -454,6 +454,7 @@ void Calander::option2(void){
     }
 
     if(length_input + Hour > 24){
+      blink_led_on(yellow);
       cout<<"NOTE: schedule cannot schedule events across multiple days. If you have an event that takes place multiple days you will need to schedule it for each day individually."<<endl;
       for(int z=Hour; z<25; z++){
         if(this->event[input_month][Day][z] != ""){
@@ -478,6 +479,7 @@ void Calander::option2(void){
     }
 
     if(Num > 0){
+      blink_led_on(red);
       cout<<"The current event being added overlaps with the above event(s). Would you still like to add the event? (Y/N) (NOTE: scheduling this event will over write all overlapping events) ";
       cin>>Yn;
 
@@ -498,6 +500,7 @@ void Calander::option2(void){
 
       }
     }else{
+      blink_led_on(green);
       cout<<"Input Time"<<input_time;
       cout<<"Are you sure you want to schedule "<<input_event<<" for "<<Month<<" "<<Day<<" from "<<Hour<<":00 "<<Response<<" till "<<End<<":00 "<<Am_Pm<<"? (Y/N)"<<endl;
       cin>>Yn;
