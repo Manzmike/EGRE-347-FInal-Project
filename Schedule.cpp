@@ -1,3 +1,21 @@
+//******************************************************************
+// Program #: Final Projecy main FIle
+//
+// Programmer: Michael Lindsay and Hunter Mitchell
+// Due Date: NA
+//
+// EGRE 347, Spring 2022       Instructor: Robert Klenke
+//
+// Pledge: I have neither given nor received unauthorized aid on this program.
+//
+// Description: All of the needed decreactions for the file
+//
+// Input: None in this file
+//
+// Output: none
+//
+//******************************************************************
+
 //sources
 //https://www.programiz.com/cpp-programming/string-int-conversion (how to turn string into integer)
 

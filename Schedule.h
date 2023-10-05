@@ -1,7 +1,7 @@
 //******************************************************************
-// Program #: Homework #2 .h FIle
+// Program #: Final Project.h FIle
 //
-// Programmer: Michael Lindsay
+// Programmer: Michael Lindsay and Hunter Mitchell
 // Due Date: NA
 //
 // EGRE 347, Spring 2022       Instructor: Robert Klenke

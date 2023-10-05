@@ -1,5 +1,5 @@
 //******************************************************************
-// Program #: Homework #4 main FIle
+// Program #: Final Project main FIle
 //
 // Programmer: Michael Lindsay
 // Due Date: NA
@@ -30,21 +30,6 @@ using namespace std;
 
 
 
-/*void blink_led_on(int led) {
-    digitalWrite(led, HIGH);
-}
-
-void blink_led_off(int led) {
-    digitalWrite(led, LOW);
-}
-*/
-
-/*
-wiringPiSetupGpio();
-pinMode(red, OUTPUT);
-pinMode(yellow, OUTPUT);
-pinMode(green, OUTPUT);
-*/
 
 
 int main(void){
@@ -52,7 +37,7 @@ int main(void){
 
   	fstream infile;
     infile.open("Inital_Cal.txt");
-    ofstream outfile("Inital_Cal20.txt");
+    ofstream outfile("Final_Cal.txt");
 
 
   Calander V;
